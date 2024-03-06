@@ -1,0 +1,40 @@
+def inputNumber(prompt):
+    while True:
+        try:
+            value = float(input(prompt))
+            return value
+        except ValueError:
+            print("Dữ liệu không hợp lệ!")
+
+def calculate_gpa(grades, credits):
+    product_sum = sum([grade * credit for grade, credit in zip(grades, credits)])
+    total_credits = sum(credits)
+    gpa = product_sum / total_credits
+    return gpa
+
+name = input("Nhập tên của bạn: ")
+subjects = ["C#", "Python", "Java"]
+credits = []
+grades = []
+
+for subject in subjects:
+    grade = inputNumber(f"Nhập điểm cho môn {subject}: ")
+    grades.append(grade)
+    credit = inputNumber(f"Nhập số tín chỉ cho môn {subject}: ")
+    credits.append(credit)
+
+gpa = calculate_gpa(grades, credits)
+
+print(f"Tên của bạn là: {name}")
+print(f"GPA của bạn là: {gpa}")
+
+try:
+    with open("student_scores.txt", "w") as f:
+        f.write(f"Tên: {name}\n")
+        f.write(f"Môn học: {subjects}\n")
+        f.write(f"Điểm: {grades}\n")
+        f.write(f"Tín chỉ: {credits}\n")
+        f.write(f"GPA: {gpa}\n")
+    print("Kết quả đã được ghi vào tệp student_scores.txt")
+except IOError:
+    print("Không thể ghi kết quả vào tệp")
